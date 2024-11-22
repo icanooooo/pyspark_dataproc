@@ -1,19 +1,6 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import to_date, udf, lit
-from pyspark.sql.types import DoubleType
-from currency_converter import CurrencyConverter
-
-def changeCurrency(amount, inCurrency, outCurrency):
-    try:
-        c = CurrencyConverter()
-
-        amount_in_usd = c.convert(amount, inCurrency, outCurrency)
-        return amount_in_usd
-    except:
-        return None
-
-changeCurrency_udf = udf(changeCurrency, DoubleType())
-
+from pyspark.sql.functions import to_date, lit
+from helper.pyspark_helper import changeCurrency_udf
 
 spark = SparkSession.builder.appName('amazon sales project').getOrCreate() #Cari tau ini apa/ngaipain
 
